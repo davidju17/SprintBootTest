@@ -1,4 +1,4 @@
-package com.davidmonroy.spring_boot_library.entity;
+package com.davidmonroy.springbootlibrary.entity;
 
 import lombok.Data;
 

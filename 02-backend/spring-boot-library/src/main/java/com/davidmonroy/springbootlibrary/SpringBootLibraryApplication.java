@@ -1,4 +1,4 @@
-package com.davidmonroy.spring_boot_library;
+package com.davidmonroy.springbootlibrary;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
