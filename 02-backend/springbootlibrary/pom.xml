@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.davidmonroy</groupId>
-	<artifactId>spring-boot-library</artifactId>
+	<artifactId>springbootlibrary</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-library</name>
 	<description>Spring Boot Application for React</description>

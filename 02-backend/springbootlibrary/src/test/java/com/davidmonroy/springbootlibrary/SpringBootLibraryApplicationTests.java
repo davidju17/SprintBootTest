@@ -1,4 +1,4 @@
-package com.davidmonroy.spring_boot_library;
+package com.davidmonroy.springbootlibrary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
