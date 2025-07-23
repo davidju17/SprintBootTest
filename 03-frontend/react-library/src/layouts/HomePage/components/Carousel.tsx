@@ -41,7 +41,7 @@ export const Carousel = () => {
         fetchBooks().catch((error: any) => {
             setIsLoading(false);
             setHttpError(error.message);
-        });
+        })
     }, []);
 
     if (isLoading) {
@@ -72,23 +72,28 @@ export const Carousel = () => {
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <div className="row d-flex justify-content-center align-items-center">
-                            <ReturnBook />
-                            <ReturnBook />
-                            <ReturnBook />
+                            {books.slice(0,3).map(
+                                book => (<ReturnBook book={book} key={book.id} />
+                                ))
+                            }
+
+                            
                         </div>
                     </div>
                     <div className="carousel-item">
                         <div className="row d-flex justify-content-center align-items-center">
-                            <ReturnBook />
-                            <ReturnBook />
-                            <ReturnBook />
+                            {books.slice(3,6).map(
+                                book => (<ReturnBook book={book} key={book.id} />
+                                ))
+                            }
                         </div>
                     </div>
                     <div className="carousel-item">
                         <div className="row d-flex justify-content-center align-items-center">
-                            <ReturnBook />
-                            <ReturnBook />
-                            <ReturnBook />
+                            {books.slice(6,9).map(
+                                book => (<ReturnBook book={book} key={book.id} />
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
@@ -104,18 +109,8 @@ export const Carousel = () => {
             {/* {Mobile} */}
             <div className="d-lg-none mt-3">
                 <div className="row d-flex justify-content-center align-items-center">
-                    <div className="text-center">
-                        <img src={require("./../../../Images/BooksImages/book-luv2code-1000.png")}
-                            width="151"
-                            height="233"
-                            alt="book"
-                        />
-                        <h6 className="mt-2">
-                            <b>Book</b>
-                        </h6>
-                        <p>David Monroy</p>
-                        <a className="btn main-color text-white" href="#">Reserve</a>
-                    </div>
+                    {/* randomly passing book 7 */}
+                    <ReturnBook book={books[7]} key={books[7].id}/>
                 </div>
             </div>
             <div className="homepage-carousel-title mt-3">
