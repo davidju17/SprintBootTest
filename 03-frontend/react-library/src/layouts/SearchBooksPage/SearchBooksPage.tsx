@@ -50,7 +50,7 @@ export const SearchBooksPage = () => {
             setIsLoading(false);
             setHttpError(error.message);
         })
-    }, []);
+    }, [currentPage]);
 
     if (isLoading) {
         return (
