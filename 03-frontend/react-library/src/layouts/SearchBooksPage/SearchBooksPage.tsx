@@ -12,13 +12,24 @@ export const SearchBooksPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [booksPerPage] = useState(5);
     const [totalAmountOfBooks, setTotalAmountOfBooks] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);        
+    const [totalPages, setTotalPages] = useState(0);
+    const [search, setSearch] = useState('');
+    const [searchUrl, setSearchUrl] = useState('');        
 
     useEffect(() => {
         // Fetch books from API or any data source
         const fetchBooks = async () => {
-            const baserUrl: string = "http://localhost:8080/api/books";
-            const url: string = `${baserUrl}?page=${currentPage - 1}&size=${booksPerPage}`;
+
+            const baseUrl: string = "http://localhost:8080/api/books";
+            
+            let url: string = '';
+
+            if (searchUrl === '') {
+                url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`;
+            } else {
+                let searchWithPage = searchUrl.replace('<pageNumber>', `${currentPage - 1}`);
+                url = baseUrl + searchWithPage;
+            }
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Something went wrong!');
@@ -52,7 +63,7 @@ export const SearchBooksPage = () => {
         })
         // Scroll to top on page change
         window.scrollTo(0, 0);
-    }, [currentPage]);
+    }, [currentPage, searchUrl]);
 
     if (isLoading) {
         return (
@@ -66,6 +77,15 @@ export const SearchBooksPage = () => {
                 <p>{httpError}</p>
             </div>
         )
+    }
+
+    const searchHandleChange = () => {
+        setCurrentPage(1);
+        if (search === '') {
+            setSearchUrl('');
+        } else {
+            setSearchUrl(`/search/findByTitleContaining?title=${search}&page=0&size=${booksPerPage}`)
+        }
     }
 
     const indexOfLastBook: number = currentPage * booksPerPage;
@@ -84,8 +104,10 @@ export const SearchBooksPage = () => {
                             <div className='d-flex'>
                                 <input className='form-control me-2' type='search'
                                     placeholder='Search' aria-labelledby='Search'
+                                    onChange={e => setSearch(e.target.value)}
                                 />
-                                <button className='btn btn-outline-success'>
+                                <button className='btn btn-outline-success'
+                                    onClick={() => searchHandleChange()}>
                                     Search
                                 </button>
                             </div>
