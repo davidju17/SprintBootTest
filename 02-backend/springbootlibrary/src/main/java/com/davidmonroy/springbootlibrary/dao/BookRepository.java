@@ -15,4 +15,6 @@ public interface BookRepository extends JpaRepository<Book, Long>
     //http://localhost:8080/api/books/search is the endpoint for new search functionality in this repository
 
     Page<Book> findByTitleContaining(@RequestParam("title") String title, Pageable pageable);
+
+    Page<Book> findByCategory(@RequestParam("category") String category, Pageable pageable);
 }
