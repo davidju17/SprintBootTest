@@ -25,9 +25,11 @@ export const SearchBooksPage = () => {
             
             let url: string = '';
 
-            if (searchUrl === '') {
+            if (searchUrl === '') 
+            {
                 url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`;
-            } else {
+            } else 
+            {
                 let searchWithPage = searchUrl.replace('<pageNumber>', `${currentPage - 1}`);
                 url = baseUrl + searchWithPage;
             }
@@ -80,17 +82,24 @@ export const SearchBooksPage = () => {
         )
     }
 
-    const searchHandleChange = () => {
+        const searchHandleChange = () => {
+        
         setCurrentPage(1);
-        if (search === '') {
+        if (search === '') 
+        {
             setSearchUrl('');
-        } else {
-            setSearchUrl(`/search/findByTitleContaining?title=${search}&page=0&size=${booksPerPage}`)
+        } else 
+        {
+            setSearchUrl(`/search/findByTitleContaining?title=${search}&page=<pageNumber>&size=${booksPerPage}`)
         }
+
+        setCategorySelection('Book category')
     }
 
     const categoryField = (value: string) => {
+        
         setCurrentPage(1);
+
         if (
             value.toLowerCase() === 'fe' || 
             value.toLowerCase() === 'be' || 
