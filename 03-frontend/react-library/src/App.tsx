@@ -8,14 +8,16 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 export const App = () => {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar />
+      <div className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/search" element={<SearchBooksPage />} />
         </Routes>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
