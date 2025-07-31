@@ -160,7 +160,7 @@ export const BookCheckoutPage = () => {
                 </div>
                 <CheckoutAndReviewBox book={book} mobile={true} />
                 <hr />
-                <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
+                <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
             </div>
         </div>
     );
