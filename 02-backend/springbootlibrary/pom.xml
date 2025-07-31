@@ -11,7 +11,7 @@
 	<groupId>com.davidmonroy</groupId>
 	<artifactId>springbootlibrary</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-library</name>
+	<name>springbootlibrary</name>
 	<description>Spring Boot Application for React</description>
 	<url/>
 	<licenses>
@@ -66,6 +66,7 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>1.18.32</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
