@@ -21,7 +21,7 @@ export const Heros = () => {
                             </p>
                              {isAuthenticated ? 
                                 <Link type='button' className='btn main-color btn-lg text-white'
-                                    to='search'>Explore top books </Link>
+                                    to='/search'>Explore top books </Link>
                                 :
                                 <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
                             }
@@ -62,7 +62,7 @@ export const Heros = () => {
                             </p>
                             {isAuthenticated ? 
                                 <Link type='button' className='btn main-color btn-lg text-white'
-                                    to='search'>Explore top books</Link>
+                                    to='/search'>Explore top books</Link>
                                 :
                                 <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
                             }
