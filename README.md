@@ -138,3 +138,7 @@ This is a practice project using Spring Boot and React. Feel free to fork and ex
 
 ## 📄 License
 This project is for educational purposes.
+
+## Auth0 email address
+davidju17+auth0-test@gmail.com
+D@vidju17
