@@ -22,21 +22,21 @@ public class BookController
 
     @GetMapping("/secure/currentloans/count")
     public int currentLoansCount(@AuthenticationPrincipal Jwt jwt) {
-        String userEmail = "testuser@gmail.com"; //hardcoded for now
+        String userEmail = jwt.getClaim("email");
         return bookService.currentLoansCount(userEmail);
     }
 
     @GetMapping("/secure/ischeckedout/byuser")
     public Boolean checkoutBookByUser(@AuthenticationPrincipal Jwt jwt,
                                       @RequestParam Long bookId) {
-        String userEmail = "testuser@gmail.com"; //hardcoded for now
+        String userEmail = jwt.getClaim("email");
         return bookService.checkoutBookByUser(userEmail, bookId);
     }
 
     @PutMapping("/secure/checkout")
     public Book checkoutBook(@AuthenticationPrincipal Jwt jwt, @RequestParam Long bookId) throws Exception
     {
-        String userEmail = "testuser@gmail.com"; //hardcoded for now
+        String userEmail = jwt.getClaim("email");
         return bookService.checkoutBook(userEmail, bookId);
     }
 }
