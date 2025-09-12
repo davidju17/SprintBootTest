@@ -20,6 +20,13 @@ public class BookController
         this.bookService = bookService;
     }
 
+    @GetMapping("/secure/ischeckedout/byuser")
+    public Boolean checkoutBookByUser(@AuthenticationPrincipal Jwt jwt,
+                                      @RequestParam Long bookId) {
+        String userEmail = "testuser@gmail.com"; //hardcoded for now
+        return bookService.checkoutBookByUser(userEmail, bookId);
+    }
+
     @PutMapping("/secure/checkout")
     public Book checkoutBook(@AuthenticationPrincipal Jwt jwt, @RequestParam Long bookId) throws Exception
     {
