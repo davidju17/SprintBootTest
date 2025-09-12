@@ -20,6 +20,12 @@ public class BookController
         this.bookService = bookService;
     }
 
+    @GetMapping("/secure/currentloans/count")
+    public int currentLoansCount(@AuthenticationPrincipal Jwt jwt) {
+        String userEmail = "testuser@gmail.com"; //hardcoded for now
+        return bookService.currentLoansCount(userEmail);
+    }
+
     @GetMapping("/secure/ischeckedout/byuser")
     public Boolean checkoutBookByUser(@AuthenticationPrincipal Jwt jwt,
                                       @RequestParam Long bookId) {
