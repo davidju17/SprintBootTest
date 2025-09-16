@@ -98,13 +98,13 @@ SprintBootTest/
 4. The React application will start on `http://localhost:3000`
 
 ## 🌟 Features
-**User Authentication**: Secure login using Auth0 (✅ Completed)
- **Book Management**: Browse, search, and view book details
- **User Authentication**: Secure login using Auth0 (✅ Completed)
- **Book Reviews**: Users can read and write book reviews (✅ Completed)
- **Responsive Design**: Mobile-friendly interface (✅ Completed)
- **Pagination**: Efficient data loading with pagination (✅ Completed)
- **Star Rating System**: Visual rating system for books (✅ Completed)
+- **User Authentication**: Secure login using Auth0 (✅ Completed)
+- **Book Management**: Browse, search, and view book details
+- **User Authentication**: Secure login using Auth0 (✅ Completed)
+- **Book Reviews**: Users can read and write book reviews (✅ Completed)
+- **Responsive Design**: Mobile-friendly interface (✅ Completed)
+- **Pagination**: Efficient data loading with pagination (✅ Completed)
+- **Star Rating System**: Visual rating system for books (✅ Completed)
 - [ ] **User Profiles**: Enhanced user management and profiles
 - [ ] **Shopping Cart**: Add cart functionality for book borrowing/purchasing
 - [ ] **Payment Integration**: Implement payment processing
