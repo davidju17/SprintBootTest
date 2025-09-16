@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                                         "/api/admin/secure/**")
                                 .authenticated().anyRequest().permitAll())
                 .oauth2Login(withDefaults())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
+                .oauth2ResourceServer((oauth2) -> oauth2.jwt(withDefaults()))
                 .cors(withDefaults());
 
         //        Disable Cross Site Request Forgery
