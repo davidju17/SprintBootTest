@@ -9,5 +9,5 @@ public class ReviewRequest
 {
     private double rating;
     private Long bookId;
-    private Optional<String> bookId;
+    private Optional<String> reviewDescription;
 }
