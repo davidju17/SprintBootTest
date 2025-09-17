@@ -25,6 +25,10 @@ export const BookCheckoutPage = () => {
     const [currentLoansCount, setCurrentLoansCount] = useState(0);
     const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] = useState(true);
 
+    // Is Book Check out 
+    const [isCheckedOut, setIsCheckedOut] = useState(false);
+    const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
+
     const bookId = (window.location.pathname).split('/')[2];
 
     useEffect(() => {
@@ -163,36 +167,36 @@ export const BookCheckoutPage = () => {
     }, [isAuthenticated, getAccessTokenSilently]);
     // }, [isAuthenticated, getAccessTokenSilently, isCheckedOut]);
 
-    // useEffect(() => {
-    //     const fetchUserCheckedOutBook = async () => {
-    //         if (isAuthenticated) {
-    //             const accessToken = await getAccessTokenSilently();
-    //             const url = `http://localhost:8080/api/books/secure/ischeckedout/byuser?bookId=${bookId}`;
-    //             const requestOptions = {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     Authorization: `Bearer ${accessToken}`,
-    //                     'Content-Type': 'application/json'
-    //                 }
-    //             };
-    //             const bookCheckedOut = await fetch(url, requestOptions);
+    useEffect(() => {
+        const fetchUserCheckedOutBook = async () => {
+            if (isAuthenticated) {
+                const accessToken = await getAccessTokenSilently();
+                const url = `http://localhost:8080/api/books/secure/ischeckedout/byuser?bookId=${bookId}`;
+                const requestOptions = {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                };
+                const bookCheckedOut = await fetch(url, requestOptions);
 
-    //             if (!bookCheckedOut.ok) {
-    //                 throw new Error('Something went wrong!');
-    //             }
+                if (!bookCheckedOut.ok) {
+                    throw new Error('Something went wrong!');
+                }
 
-    //             const bookCheckedOutResponseJson = await bookCheckedOut.json();
-    //             setIsCheckedOut(bookCheckedOutResponseJson);
-    //         }
-    //         setIsLoadingBookCheckedOut(false);
-    //     }
-    //     fetchUserCheckedOutBook().catch((error: any) => {
-    //         setIsLoadingBookCheckedOut(false);
-    //         setHttpError(error.message);
-    //     })
-    // }, [bookId, isAuthenticated, getAccessTokenSilently]);
+                const bookCheckedOutResponseJson = await bookCheckedOut.json();
+                setIsCheckedOut(bookCheckedOutResponseJson);
+            }
+            setIsLoadingBookCheckedOut(false);
+        }
+        fetchUserCheckedOutBook().catch((error: any) => {
+            setIsLoadingBookCheckedOut(false);
+            setHttpError(error.message);
+        })
+    }, [bookId, isAuthenticated, getAccessTokenSilently]);
 
-    if (isLoading || isLoadingReview || isLoadingCurrentLoansCount) {
+    if (isLoading || isLoadingReview || isLoadingCurrentLoansCount || isLoadingBookCheckedOut) {
         return (
             <SpinnerLoading />
         )
