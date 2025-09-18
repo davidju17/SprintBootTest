@@ -33,8 +33,8 @@ public class ReviewService
         }
 
         Review review = new Review();
-        review.setBookId(review.getBookId());
-        review.setRating(review.getRating());
+        review.setBookId(reviewRequest.getBookId());
+        review.setRating(reviewRequest.getRating());
         review.setUserEmail(userEmail);
 
         if(reviewRequest.getReviewDescription().isPresent())
