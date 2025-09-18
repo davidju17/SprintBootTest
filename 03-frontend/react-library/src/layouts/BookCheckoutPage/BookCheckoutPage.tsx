@@ -7,6 +7,7 @@ import ReviewModel from "../../models/ReviewModel";
 import { LatestReviews } from "./LatestReviews";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import ReviewRequestModel from "../../models/ReviewRequestModel";
 
 export const BookCheckoutPage = () => {
 
@@ -230,29 +231,29 @@ export const BookCheckoutPage = () => {
     }
 
 
-    // async function submitReview(starInput: number, reviewDescription: string) {
-    //     let bookId: number = 0;
-    //     if (book?.id) {
-    //         bookId = book.id;
-    //     }
+    async function submitReview(starInput: number, reviewDescription: string) {
+        let bookId: number = 0;
+        if (book?.id) {
+            bookId = book.id;
+        }
 
-    //     const reviewRequestModel = new ReviewRequestModel(starInput, bookId, reviewDescription);
-    //     const url = `http://localhost:8080/api/reviews/secure`;
-    //     const accessToken = await getAccessTokenSilently();
-    //     const requestOptions = {
-    //         method: 'POST',
-    //         headers: {
-    //             Authorization: `Bearer ${accessToken}`,
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(reviewRequestModel)
-    //     };
-    //     const returnResponse = await fetch(url, requestOptions);
-    //     if (!returnResponse.ok) {
-    //         throw new Error('Something went wrong!');
-    //     }
-    //     setIsReviewLeft(true);
-    // }
+        const reviewRequestModel = new ReviewRequestModel(starInput, bookId, reviewDescription);
+        const url = `http://localhost:8080/api/reviews/secure`;
+        const accessToken = await getAccessTokenSilently();
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reviewRequestModel)
+        };
+        const returnResponse = await fetch(url, requestOptions);
+        if (!returnResponse.ok) {
+            throw new Error('Something went wrong!');
+        }
+        setIsReviewLeft(true);
+    }
 
     return (
         <div>
@@ -276,7 +277,7 @@ export const BookCheckoutPage = () => {
                     </div>
                     <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount}
                     isAuthenticated={isAuthenticated} isCheckedOut={isCheckedOut}
-                    checkoutBook={checkoutBook} isReviewLeft={isReviewLeft} />
+                    checkoutBook={checkoutBook} isReviewLeft={isReviewLeft} submitReview ={submitReview} />
 
                 </div>
                 <hr />
@@ -302,7 +303,7 @@ export const BookCheckoutPage = () => {
                 </div>
                 <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount}
                 isAuthenticated={isAuthenticated} isCheckedOut={isCheckedOut}
-                checkoutBook={checkoutBook} isReviewLeft={isReviewLeft} />
+                checkoutBook={checkoutBook} isReviewLeft={isReviewLeft} submitReview ={submitReview} />
                 <hr />
                 <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
             </div>
