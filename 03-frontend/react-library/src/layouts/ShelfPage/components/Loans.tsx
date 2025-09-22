@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ShelfCurrentLoans from '../../../models/ShelfCurrentLoans';
 import { SpinnerLoading } from '../../Utils/SpinnerLoading';
 import { useAuth0 } from '@auth0/auth0-react';
+import { LoansModal } from './LoansModal';
 
 export const Loans = () => {
     
@@ -154,7 +155,7 @@ export const Loans = () => {
                                 </div>
                             </div>
                             <hr/>
-                            {/* <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} /> */}
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} />
                             {/* returnBook={returnBook} renewLoan={renewLoan}/> */}
                         </div>
                     ))}
@@ -227,7 +228,7 @@ export const Loans = () => {
                                 </div>
                             
                             <hr/>
-                            {/* <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} /> */}
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} />
                             {/* returnBook={returnBook} renewLoan={renewLoan}/> */}
                         </div>
                     ))}
