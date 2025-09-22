@@ -14,6 +14,7 @@ import { Auth0Provider, withAuthenticationRequired} from '@auth0/auth0-react';
 
 import { useNavigate } from 'react-router-dom';
 import { ReviewListPage } from './layouts/BookCheckoutPage/ReviewListPage/ReviewListPage';
+import { ShelfPage } from './layouts/ShelfPage/ShelfPage';
 
 const Auth0ProviderWithHistory = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
@@ -57,8 +58,11 @@ export const App = () => {
           <Route path="/reviewlist/:bookId" element={<ReviewListPage />} />
           <Route path="/checkout/:bookId" element={<BookCheckoutPage />} />
           <Route path='/login' element={<LoginPage />} />
-          {/* <SecureRoute path='/shelf' component={ShelfPage} />
-          <SecureRoute path='/messages' component={MessagesPage} />
+          <Route path='/shelf'
+              element={React.createElement(withAuthenticationRequired(ShelfPage))}
+            />
+          {/* <SecureRoute path='/shelf' component={ShelfPage} /> */}
+          {/* <SecureRoute path='/messages' component={MessagesPage} />
           <SecureRoute path='/admin' component={ManageLibraryPage} /> */}
         </Routes>
       </div>
