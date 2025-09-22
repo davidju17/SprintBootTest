@@ -13,7 +13,7 @@ export const Loans = () => {
     // Current Loans
     const [shelfCurrentLoans, setShelfCurrentLoans] = useState<ShelfCurrentLoans[]>([]);
     const [isLoadingUserLoans, setIsLoadingUserLoans] = useState(true);
-    // const [checkout, setCheckout] = useState(false);
+    const [checkout, setCheckout] = useState(false);
 
     useEffect(() => {
         const fetchUserCurrentLoans = async () => {
@@ -41,8 +41,7 @@ export const Loans = () => {
             setHttpError(error.message);
         })
         window.scrollTo(0, 0);
-    }, [isAuthenticated, getAccessTokenSilently]);
-    // }, [isAuthenticated, getAccessTokenSilenasedftly, checkout]);
+    }, [isAuthenticated, getAccessTokenSilently, checkout]);
 
     if (isLoadingUserLoans) {
         return (
@@ -60,22 +59,27 @@ export const Loans = () => {
         );
     }
 
-    // async function returnBook(bookId: number) {
-    //     const url = `http://localhost:8080/api/books/secure/return?bookId=${bookId}`;
-    //     const accessToken = await getAccessTokenSilently();
-    //     const requestOptions = {
-    //         method: 'PUT',
-    //         headers: {
-    //             Authorization: `Bearer ${accessToken}`,
-    //             'Content-Type': 'application/json'
-    //         }
-    //     };
-    //     const returnResponse = await fetch(url, requestOptions);
-    //     if (!returnResponse.ok) {
-    //         throw new Error('Something went wrong!');
-    //     }
-    //     setCheckout(!checkout);
-    // }
+    async function returnBook(bookId: number) {
+        try {
+            const accessToken = await getAccessTokenSilently();
+            const url = `http://localhost:8080/api/books/secure/return?bookId=${bookId}`;
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+            const returnResponse = await fetch(url, requestOptions);
+            if (!returnResponse.ok) {
+                throw new Error('Something went wrong!');
+            }
+            setCheckout(!checkout);
+        } catch (error: any) {
+            console.error('Error returning book:', error);
+            setHttpError(error.message);
+        }
+    }
 
     // async function renewLoan(bookId: number) {
     //     const url = `http://localhost:8080/api/books/secure/renew/loan?bookId=${bookId}`;
@@ -155,8 +159,8 @@ export const Loans = () => {
                                 </div>
                             </div>
                             <hr/>
-                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} />
-                            {/* returnBook={returnBook} renewLoan={renewLoan}/> */}
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} returnBook={returnBook}/>
+                            {/*  renewLoan={renewLoan}/> */}
                         </div>
                     ))}
                 </> :
@@ -228,8 +232,8 @@ export const Loans = () => {
                                 </div>
                             
                             <hr/>
-                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} />
-                            {/* returnBook={returnBook} renewLoan={renewLoan}/> */}
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} returnBook={returnBook}/>
+                            {/* renewLoan={renewLoan}/> */}
                         </div>
                     ))}
                 </> :
