@@ -53,7 +53,7 @@ export const Navbar = () => {
                         <li className='nav-item'>
                             <NavLink className='nav-link' to='/search'>Search Books</NavLink>
                         </li>
-                        {isAuthenticated &&
+                        {isAuthenticated && 
                             <li className='nav-item'>
                                 <NavLink className='nav-link' to='/shelf'>Shelf</NavLink>
                             </li>
