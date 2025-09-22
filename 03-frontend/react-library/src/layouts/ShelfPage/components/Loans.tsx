@@ -81,23 +81,23 @@ export const Loans = () => {
         }
     }
 
-    // async function renewLoan(bookId: number) {
-    //     const url = `http://localhost:8080/api/books/secure/renew/loan?bookId=${bookId}`;
-    //     const accessToken = await getAccessTokenSilently();
-    //     const requestOptions = {
-    //         method: 'PUT',
-    //         headers: {
-    //             Authorization: `Bearer ${accessToken}`,
-    //             'Content-Type': 'application/json'
-    //         }
-    //     };
+    async function renewLoan(bookId: number) {
+        const url = `http://localhost:8080/api/books/secure/renew/loan?bookId=${bookId}`;
+        const accessToken = await getAccessTokenSilently();
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        };
 
-    //     const returnResponse = await fetch(url, requestOptions);
-    //     if (!returnResponse.ok) {
-    //         throw new Error('Something went wrong!');
-    //     }
-    //     setCheckout(!checkout);
-    // }
+        const returnResponse = await fetch(url, requestOptions);
+        if (!returnResponse.ok) {
+            throw new Error('Something went wrong!');
+        }
+        setCheckout(!checkout);
+    }
     
     return (
         <div>
@@ -159,8 +159,8 @@ export const Loans = () => {
                                 </div>
                             </div>
                             <hr/>
-                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} returnBook={returnBook}/>
-                            {/*  renewLoan={renewLoan}/> */}
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} returnBook={returnBook}
+                            renewLoan={renewLoan}/>
                         </div>
                     ))}
                 </> :
@@ -232,8 +232,8 @@ export const Loans = () => {
                                 </div>
                             
                             <hr/>
-                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} returnBook={returnBook}/>
-                            {/* renewLoan={renewLoan}/> */}
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} returnBook={returnBook} 
+                            renewLoan={renewLoan}/>
                         </div>
                     ))}
                 </> :
