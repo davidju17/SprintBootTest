@@ -4,11 +4,10 @@ import HistoryModel from '../../../models/HistoryModel';
 import { Pagination } from '../../Utils/Pagination';
 import { SpinnerLoading } from '../../Utils/SpinnerLoading';
 import { useAuth0 } from '@auth0/auth0-react';
-import { get } from 'http';
 
 export const HistoryPage = () => {
     
-    const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [isLoadingHistory, setIsLoadingHistory] = useState(true);
     const [httpError, setHttpError] = useState(null);
 
@@ -21,8 +20,8 @@ export const HistoryPage = () => {
 
     useEffect(() => {
         const fetchUserHistory = async () => {
-            if (isAuthenticated && user?.email) {
-                const url = `http://localhost:8080/api/histories/search/findBooksByUserEmail?userEmail=${user?.email}&page=${currentPage - 1}&size=5`;
+            if (isAuthenticated) {
+                const url = `http://localhost:8080/api/history/secure?page=${currentPage - 1}&size=5`;
                 
                 const accessToken = await getAccessTokenSilently();
                 const requestOptions = {
@@ -38,8 +37,8 @@ export const HistoryPage = () => {
                 }
                 const historyResponseJson = await historyResponse.json();
 
-                setHistories(historyResponseJson._embedded.histories);
-                setTotalPages(historyResponseJson.page.totalPages);
+                setHistories(historyResponseJson.content);
+                setTotalPages(historyResponseJson.totalPages);
             }
             setIsLoadingHistory(false);
 
@@ -48,7 +47,7 @@ export const HistoryPage = () => {
             setIsLoadingHistory(false);
             setHttpError(error.message);
         })
-    }, [isAuthenticated, user, currentPage, getAccessTokenSilently]);
+    }, [isAuthenticated, currentPage, getAccessTokenSilently]);
 
     if (isLoadingHistory) {
         return (
