@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export const Messages = () => {
 
-    const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [isLoadingMessages, setIsLoadingMessages] = useState(true);
     const [httpError, setHttpError] = useState(null);
 
@@ -22,7 +22,7 @@ export const Messages = () => {
         const fetchUserMessages = async () => {
             if (isAuthenticated) {
                 const accessToken = await getAccessTokenSilently();
-                const url = `http://localhost:8080/api/messages/search/findByUserEmail?userEmail=${user?.email}&page=${currentPage - 1}&size=${messagesPerPage}`;
+                const url = `http://localhost:8080/api/message/secure?page=${currentPage - 1}&size=${messagesPerPage}`;
                 const requestOptions = {
                     method: 'GET',
                     headers: {
@@ -35,17 +35,17 @@ export const Messages = () => {
                     throw new Error('Something went wrong!');
                 }
                 const messagesResponseJson = await messagesResponse.json();
-                setMessages(messagesResponseJson._embedded.messages);
-                setTotalPages(messagesResponseJson.page.totalPages);
+                setMessages(messagesResponseJson.content);
+                setTotalPages(messagesResponseJson.totalPages);
             }
             setIsLoadingMessages(false);
         } 
         fetchUserMessages().catch((error: any) => {
             setIsLoadingMessages(false);
-            setHttpError(error.messages);
+            setHttpError(error.message);
         })
         window.scrollTo(0, 0);
-    }, [isAuthenticated, user, getAccessTokenSilently, currentPage]);
+    }, [isAuthenticated, getAccessTokenSilently, currentPage, messagesPerPage]);
 
     if (isLoadingMessages) {
         return (
