@@ -44,9 +44,9 @@ export const ManageLibraryPage = () => {
         return (<SpinnerLoading />) 
     }
 
-    // if (!roles?.includes('admin')) {
-    //     return <Navigate to='/home'/>
-    // }
+    if (!roles?.includes('admin')) {
+        return <Navigate to='/home'/>
+    }
     
 
     return (
