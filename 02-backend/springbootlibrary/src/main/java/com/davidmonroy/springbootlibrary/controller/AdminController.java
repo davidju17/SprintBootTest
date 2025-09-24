@@ -22,6 +22,18 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    @PutMapping("/secure/increase/book/quantity")
+    public void increaseBookQuantity(@AuthenticationPrincipal Jwt jwt,
+                                     @RequestParam Long bookId) throws Exception {
+        List<String> roles = jwt.getClaimAsStringList("https://luv2code-react-library.com/roles");
+        String admin = roles != null && !roles.isEmpty() ? roles.get(0) : null;
+
+        if (admin == null || !admin.equals("admin")) {
+            throw new Exception("Administration page only");
+        }
+        adminService.increaseBookQuantity(bookId);
+    }
+
 
     @PostMapping("/secure/add/book")
     public void postBook(@AuthenticationPrincipal Jwt jwt,
