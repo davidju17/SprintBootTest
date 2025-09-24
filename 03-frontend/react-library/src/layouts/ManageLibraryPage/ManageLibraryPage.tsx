@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { SpinnerLoading } from '../Utils/SpinnerLoading';
+import { AdminMessages } from './components/AdminMessages';
 
 export const ManageLibraryPage = () => {
 
@@ -84,7 +85,7 @@ export const ManageLibraryPage = () => {
                        {changeQuantityOfBooksClick ? "Change Quantity" : <></>}
                     </div>
                     <div className='tab-pane fade' id='nav-messages' role='tabpanel' aria-labelledby='nav-messages-tab'>
-                        {messagesClick ? "Admin Messages" : <></>}
+                        {messagesClick ? <AdminMessages /> : <></>}
                     </div>
                 </div>
             </div>
