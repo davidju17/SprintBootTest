@@ -58,5 +58,16 @@ public class AdminController {
         adminService.postBook(addBookRequest);
     }
 
+    @DeleteMapping("/secure/delete/book")
+    public void deleteBook(@AuthenticationPrincipal Jwt jwt,
+                           @RequestParam Long bookId) throws Exception {
+        List<String> roles = jwt.getClaimAsStringList("https://davidmonroy-react-library.com/roles");
+        String admin = roles != null && !roles.isEmpty() ? roles.get(0) : null;
+
+        if (admin == null || !admin.equals("admin")) {
+            throw new Exception("Administration page only");
+        }
+        adminService.deleteBook(bookId);
+    }
 
 }

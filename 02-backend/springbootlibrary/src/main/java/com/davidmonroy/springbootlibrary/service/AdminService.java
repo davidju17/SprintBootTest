@@ -1,6 +1,8 @@
 package com.davidmonroy.springbootlibrary.service;
 
 import com.davidmonroy.springbootlibrary.dao.BookRepository;
+import com.davidmonroy.springbootlibrary.dao.CheckoutRepository;
+import com.davidmonroy.springbootlibrary.dao.ReviewRepository;
 import com.davidmonroy.springbootlibrary.entity.Book;
 import com.davidmonroy.springbootlibrary.requestmodels.AddBookRequest;
 import jakarta.transaction.Transactional;
@@ -14,10 +16,15 @@ import java.util.Optional;
 public class AdminService {
 
     private BookRepository bookRepository;
+    private CheckoutRepository checkoutRepository;
+    private ReviewRepository reviewRepository;
 
     @Autowired
-    public AdminService (BookRepository bookRepository) {
+    public AdminService(BookRepository bookRepository, CheckoutRepository checkoutRepository, ReviewRepository reviewRepository)
+    {
         this.bookRepository = bookRepository;
+        this.checkoutRepository = checkoutRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     public void increaseBookQuantity(Long bookId) throws Exception {
@@ -60,5 +67,18 @@ public class AdminService {
         book.setCategory(addBookRequest.getCategory());
         book.setImg(addBookRequest.getImg());
         bookRepository.save(book);
+    }
+
+    public void deleteBook(Long bookId) throws Exception {
+
+        Optional<Book> book = bookRepository.findById(bookId);
+
+        if (!book.isPresent()) {
+            throw new Exception("Book not found");
+        }
+
+        bookRepository.delete(book.get());
+        checkoutRepository.deleteAllByBookId(bookId);
+        reviewRepository.deleteAllByBookId(bookId);
     }
 }
