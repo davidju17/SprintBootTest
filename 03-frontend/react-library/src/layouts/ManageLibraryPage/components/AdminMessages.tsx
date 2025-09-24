@@ -3,6 +3,7 @@ import MessageModel from '../../../models/MessageModel';
 import { Pagination } from '../../Utils/Pagination';
 import { SpinnerLoading } from '../../Utils/SpinnerLoading';
 import { useAuth0 } from '@auth0/auth0-react';
+import { AdminMessage } from './AdminMessage';
 
 export const AdminMessages = () => {
     
@@ -76,7 +77,7 @@ export const AdminMessages = () => {
                 <>
                     <h5>Pending Q/A: </h5>
                     {messages.map(message => (
-                        <p>Questions that need to response</p>
+                        <AdminMessage key={message.id} message={message} />
                     ))}
                 </>
                 :
