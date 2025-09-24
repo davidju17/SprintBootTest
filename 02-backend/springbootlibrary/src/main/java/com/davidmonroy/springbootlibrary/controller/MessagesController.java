@@ -1,6 +1,7 @@
 package com.davidmonroy.springbootlibrary.controller;
 
 import com.davidmonroy.springbootlibrary.entity.Message;
+import com.davidmonroy.springbootlibrary.requestmodels.AdminQuestionRequest;
 import com.davidmonroy.springbootlibrary.service.MessagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,18 @@ public class MessagesController {
             @RequestParam(defaultValue = "5") int size) {
 
         return messagesService.getPendingMessages(page, size);
+    }
+
+    @PutMapping("/secure/admin/message")
+    public void putMessage(@AuthenticationPrincipal Jwt jwt,
+                           @RequestBody AdminQuestionRequest adminQuestionRequest) throws Exception {
+        String userEmail = jwt.getClaim("email");
+        List<String> roles = jwt.getClaimAsStringList("https://davidmonroy-react-library.com/roles");
+        String admin = roles != null && !roles.isEmpty() ? roles.get(0) : null;
+        if (admin == null || !admin.equals("admin")) {
+            throw new Exception("Administration page only.");
+        }
+        messagesService.putMessage(adminQuestionRequest, userEmail);
     }
 }
 

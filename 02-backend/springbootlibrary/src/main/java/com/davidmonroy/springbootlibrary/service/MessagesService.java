@@ -3,12 +3,15 @@ package com.davidmonroy.springbootlibrary.service;
 
 import com.davidmonroy.springbootlibrary.dao.MessageRepository;
 import com.davidmonroy.springbootlibrary.entity.Message;
+import com.davidmonroy.springbootlibrary.requestmodels.AdminQuestionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,5 +38,17 @@ public class MessagesService {
     public Page<Message> getPendingMessages(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return messageRepository.findByClosed(false, pageable);
+    }
+
+    public void putMessage(AdminQuestionRequest adminQuestionRequest, String userEmail) throws Exception {
+        Optional<Message> message = messageRepository.findById(adminQuestionRequest.getId());
+        if (!message.isPresent()) {
+            throw new Exception("Message not found");
+        }
+
+        message.get().setAdminEmail(userEmail);
+        message.get().setResponse(adminQuestionRequest.getResponse());
+        message.get().setClosed(true);
+        messageRepository.save(message.get());
     }
 }
