@@ -27,7 +27,7 @@ export const AdminMessages = () => {
         const fetchUserMessages = async () => {
             if (isAuthenticated) {
                 const accessToken = await getAccessTokenSilently();
-                const url = `http://localhost:8080/api/messages/search/findByClosed?closed=false&page=${currentPage - 1}&size=${messagesPerPage}`;
+                const url = `http://localhost:8080/api/messages/secure/admin/pending?page=${currentPage - 1}&size=${messagesPerPage}`;
                 const requestOptions = {
                     method: 'GET',
                     headers: {
@@ -41,8 +41,8 @@ export const AdminMessages = () => {
                 }
                 const messagesResponseJson = await messagesResponse.json();
 
-                setMessages(messagesResponseJson._embedded.messages);
-                setTotalPages(messagesResponseJson.page.totalPages);
+                setMessages(messagesResponseJson.content);
+                setTotalPages(messagesResponseJson.totalPages);
             }
             setIsLoadingMessages(false);
         }
@@ -51,7 +51,7 @@ export const AdminMessages = () => {
             setHttpError(error.message);
         })
         window.scrollTo(0, 0);
-    }, [isAuthenticated, getAccessTokenSilently, currentPage, btnSubmit]);
+    }, [isAuthenticated, getAccessTokenSilently, currentPage, btnSubmit, messagesPerPage]);
 
     if (isLoadingMessages) {
         return (

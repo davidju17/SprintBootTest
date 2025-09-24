@@ -38,6 +38,15 @@ public class MessagesController {
         String userEmail = jwt.getClaim("email");
         return messagesService.getUserMessages(userEmail, page, size);
     }
+
+    @GetMapping("/secure/admin/pending")
+    public Page<Message> getPendingMessages(
+            @AuthenticationPrincipal Jwt jwt,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        return messagesService.getPendingMessages(page, size);
+    }
 }
 
 

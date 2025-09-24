@@ -31,4 +31,9 @@ public class MessagesService {
         Pageable pageable = PageRequest.of(page, size);
         return messageRepository.findByUserEmail(userEmail, pageable);
     }
+
+    public Page<Message> getPendingMessages(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return messageRepository.findByClosed(false, pageable);
+    }
 }
