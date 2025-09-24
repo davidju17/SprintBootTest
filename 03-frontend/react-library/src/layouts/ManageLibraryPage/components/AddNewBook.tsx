@@ -39,6 +39,39 @@ export const AddNewBook = () => {
         }
     }
 
+    async function submitNewBook() {
+        const url = `http://localhost:8080/api/admin/secure/add/book`;
+        const accessToken = await getAccessTokenSilently();
+        if (isAuthenticated && title !== '' && author !== '' && category !== 'Category' 
+            && description !== '' && copies >= 0) {
+                const book: AddBookRequest = new AddBookRequest(title, author, description, copies, category);
+                book.img = selectedImage;
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(book)
+                };
+
+                const submitNewBookResponse = await fetch(url, requestOptions);
+                if (!submitNewBookResponse.ok) {
+                    throw new Error('Something went wrong!');
+                }
+                setTitle('');
+                setAuthor('');
+                setDescription('');
+                setCopies(0);
+                setCategory('Category');
+                setSelectedImage(null);
+                setDisplayWarning(false);
+                setDisplaySuccess(true);
+            } else {
+                setDisplayWarning(true);
+                setDisplaySuccess(false);
+            }
+    }
 
     return (
         <div className='container mt-5 mb-5'>
@@ -95,7 +128,7 @@ export const AddNewBook = () => {
                         </div>
                         <input type='file' onChange={e => base64ConversionForImages(e)} />
                         <div>
-                            <button type='button' className='btn btn-primary mt-3'>
+                            <button type='button' className='btn btn-primary mt-3' onClick={submitNewBook} >
                                 Add Book
                             </button>
                         </div>
