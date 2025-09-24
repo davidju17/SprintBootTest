@@ -4,6 +4,7 @@ import { Pagination } from '../../Utils/Pagination';
 import { SpinnerLoading } from '../../Utils/SpinnerLoading';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AdminMessage } from './AdminMessage';
+import AdminMessageRequest from '../../../models/AdminMessageRequest';
 
 export const AdminMessages = () => {
     
@@ -69,6 +70,28 @@ export const AdminMessages = () => {
     }
 
 
+    async function submitResponseToQuestion(id: number, response: string) {
+        const url = `http://localhost:8080/api/messages/secure/admin/message`;
+        const accessToken = await getAccessTokenSilently();
+        if (isAuthenticated && id !== null && response !== '') {
+            const messageAdminRequestModel: AdminMessageRequest = new AdminMessageRequest(id, response);
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(messageAdminRequestModel)
+            };
+
+            const messageAdminRequestModelResponse = await fetch(url, requestOptions);
+            if (!messageAdminRequestModelResponse.ok) {
+                throw new Error('Something went wrong!');
+            }
+            setBtnSubmit(!btnSubmit);
+        }
+    }
+
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     return (
@@ -77,7 +100,7 @@ export const AdminMessages = () => {
                 <>
                     <h5>Pending Q/A: </h5>
                     {messages.map(message => (
-                        <AdminMessage key={message.id} message={message} />
+                        <AdminMessage key={message.id} message={message} submitResponseToQuestion={submitResponseToQuestion} />
                     ))}
                 </>
                 :
