@@ -15,7 +15,7 @@ export const Carousel = () => {
     useEffect(() => {
         // Fetch books from API or any data source
         const fetchBooks = async () => {
-            const baserUrl: string = "http://localhost:8080/api/books";
+            const baserUrl: string = `${process.env.REACT_APP_API}/books`;
             const url: string = `${baserUrl}?page=0&size=9`;
             const response = await fetch(url);
             if (!response.ok) {

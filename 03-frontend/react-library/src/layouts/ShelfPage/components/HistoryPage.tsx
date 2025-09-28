@@ -21,7 +21,7 @@ export const HistoryPage = () => {
     useEffect(() => {
         const fetchUserHistory = async () => {
             if (isAuthenticated) {
-                const url = `http://localhost:8080/api/history/secure?page=${currentPage - 1}&size=5`;
+                const url = `${process.env.REACT_APP_API}/history/secure?page=${currentPage - 1}&size=5`;
                 
                 const accessToken = await getAccessTokenSilently();
                 const requestOptions = {
