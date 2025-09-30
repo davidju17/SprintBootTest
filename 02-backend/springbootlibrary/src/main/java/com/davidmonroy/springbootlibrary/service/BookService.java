@@ -52,9 +52,6 @@ public class BookService
 
         Book book = optionalBook.get();
 
-        book.setCopiesAvailable(book.getCopiesAvailable() - 1);
-        bookRepository.save(book);
-
         //Check user doesnt have any outstanding fees or overdue books
         List<Checkout> currentBooksCheckedOut = checkoutRepository.findBooksByUserEmail(userEmail);
 
@@ -88,6 +85,9 @@ public class BookService
             payment.setUserEmail(userEmail);
             paymentRepository.save(payment);
         }
+
+        book.setCopiesAvailable(book.getCopiesAvailable() - 1);
+        bookRepository.save(book);
 
         //create a new checkout entity and save it
         Checkout checkout = new Checkout(
