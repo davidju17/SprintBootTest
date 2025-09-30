@@ -3,9 +3,11 @@ package com.davidmonroy.springbootlibrary.service;
 import com.davidmonroy.springbootlibrary.dao.BookRepository;
 import com.davidmonroy.springbootlibrary.dao.CheckoutRepository;
 import com.davidmonroy.springbootlibrary.dao.HistoryRepository;
+import com.davidmonroy.springbootlibrary.dao.PaymentRepository;
 import com.davidmonroy.springbootlibrary.entity.Book;
 import com.davidmonroy.springbootlibrary.entity.Checkout;
 import com.davidmonroy.springbootlibrary.entity.History;
+import com.davidmonroy.springbootlibrary.entity.Payment;
 import com.davidmonroy.springbootlibrary.responsemodels.ShelfCurrentLoansResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +27,17 @@ public class BookService
     private BookRepository bookRepository;
     private CheckoutRepository checkoutRepository;
     private HistoryRepository historyRepository;
+    private PaymentRepository paymentRepository;
+
 
     //constructor dependency injection
-    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository, HistoryRepository historyRepository)
+    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository,
+                       HistoryRepository historyRepository, PaymentRepository paymentRepository)
     {
         this.bookRepository = bookRepository;
         this.checkoutRepository = checkoutRepository;
         this.historyRepository = historyRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     public Book checkoutBook(String userEmail, Long bookId) throws Exception
@@ -48,6 +54,40 @@ public class BookService
 
         book.setCopiesAvailable(book.getCopiesAvailable() - 1);
         bookRepository.save(book);
+
+        //Check user doesnt have any outstanding fees or overdue books
+        List<Checkout> currentBooksCheckedOut = checkoutRepository.findBooksByUserEmail(userEmail);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        boolean bookNeedsReturned = false;
+
+        for (Checkout checkout: currentBooksCheckedOut) {
+            Date d1 = sdf.parse(checkout.getReturnDate());
+            Date d2 = sdf.parse(LocalDate.now().toString());
+
+            TimeUnit time = TimeUnit.DAYS;
+
+            double differenceInTime = time.convert(d1.getTime() - d2.getTime(), TimeUnit.MILLISECONDS);
+
+            if (differenceInTime < 0) {
+                bookNeedsReturned = true;
+                break;
+            }
+        }
+
+        Payment userPayment = paymentRepository.findByUserEmail(userEmail);
+
+        if ((userPayment != null && userPayment.getAmount() > 0) || (userPayment != null && bookNeedsReturned)) {
+            throw new Exception("Outstanding fees");
+        }
+
+        if (userPayment == null) {
+            Payment payment = new Payment();
+            payment.setAmount(00.00);
+            payment.setUserEmail(userEmail);
+            paymentRepository.save(payment);
+        }
 
         //create a new checkout entity and save it
         Checkout checkout = new Checkout(
