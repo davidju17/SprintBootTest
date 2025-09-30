@@ -17,7 +17,7 @@ export const PaymentPage = () => {
         const fetchFees = async () => {
             if (isAuthenticated) {
                 const accessToken = await getAccessTokenSilently();
-                const url = `${process.env.REACT_APP_API}/payments/search/findByUserEmail?userEmail=dummy`;
+                const url = `${process.env.REACT_APP_API}/payment/secure/fees`;
                 const requestOptions = {
                     method: 'GET',
                     headers: { 
@@ -29,8 +29,8 @@ export const PaymentPage = () => {
                 if (!paymentResponse.ok) {
                     throw new Error('Something went wrong!')
                 }
-                const paymentResponseJson = await paymentResponse.json();
-                setFees(paymentResponseJson.amount);
+                const fees = await paymentResponse.json();
+                setFees(fees);
                 setLoadingFees(false);
             }
         }
@@ -72,7 +72,7 @@ export const PaymentPage = () => {
             {fees === 0 && 
                 <div className='mt-3'>
                     <h5>You have no fees!</h5>
-                    <Link type='button' className='btn main-color text-white' to='search'>
+                    <Link type='button' className='btn main-color text-white' to='/search'>
                         Explore top books
                     </Link>
                 </div>

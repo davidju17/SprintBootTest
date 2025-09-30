@@ -50,6 +50,13 @@ public class PaymentService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    public double getFeesByUserEmail(String userEmail) {
+        Payment payment = paymentRepository.findByUserEmail(userEmail);
+        if (payment == null) {
+            return 0.0;
+        }
+        return payment.getAmount();
+    }
 
 }
 

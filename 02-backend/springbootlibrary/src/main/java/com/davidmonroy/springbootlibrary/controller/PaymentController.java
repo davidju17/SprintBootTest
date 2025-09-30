@@ -44,6 +44,16 @@ public class PaymentController {
         }
         return paymentService.stripePayment(userEmail);
     }
+
+    @GetMapping("/fees")
+    public ResponseEntity<Double> getFees(@AuthenticationPrincipal Jwt jwt) throws Exception {
+        String userEmail = jwt.getClaim("email");
+        if (userEmail == null) {
+            throw new Exception("User email is missing");
+        }
+        double fees = paymentService.getFeesByUserEmail(userEmail);
+        return new ResponseEntity<>(fees, HttpStatus.OK);
+    }
 }
 
 
