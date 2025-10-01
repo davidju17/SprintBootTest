@@ -29,6 +29,8 @@ public class PaymentController {
                                                       @RequestBody PaymentInfoRequest paymentInfoRequest)
             throws StripeException {
 
+        String userEmail = jwt.getClaim("email");
+        paymentInfoRequest.setReceiptEmail(userEmail);
         PaymentIntent paymentIntent = paymentService.createPaymentIntent(paymentInfoRequest);
         String paymentStr = paymentIntent.toJson();
 
