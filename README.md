@@ -1,6 +1,6 @@
 # Spring Boot Library Management System
 
-A full-stack library management system built to practice Spring Boot knowledge. This application features a React frontend with TypeScript, a Spring Boot backend with MySQL database, and includes user authentication and book management capabilities.
+A full-stack library management system built to practice Spring Boot knowledge. This application features a React frontend with TypeScript, a Spring Boot backend with MySQL database, and includes user authentication, book management, and payment processing capabilities.
 
 ## 🚀 Technologies Used
 
@@ -19,6 +19,7 @@ A full-stack library management system built to practice Spring Boot knowledge. 
 - **TypeScript 4.9.5** - Type-safe JavaScript
 - **React Router DOM 6.30.1** - Client-side routing
 - **Auth0 React 2.4.0** - Authentication and user management
+- **Stripe.js & @stripe/react-stripe-js** - Payment processing integration
 - **React Testing Library** - Testing framework
 - **CSS3** - Styling
 
@@ -90,6 +91,14 @@ SprintBootTest/
    npm install
    ```
 
+   #### Additional Stripe Dependencies
+   To enable payment processing, install the following Stripe packages:
+   ```bash
+   npm install stripe@9.14.0
+   npm install @stripe/react-stripe-js@latest
+   npm install @stripe/stripe-js@1.32.0
+   ```
+
 3. Start the development server:
    ```bash
    npm start
@@ -100,15 +109,14 @@ SprintBootTest/
 ## 🌟 Features
 - **User Authentication**: Secure login using Auth0 (✅ Completed)
 - **Book Management**: Browse, search, and view book details
-- **User Authentication**: Secure login using Auth0 (✅ Completed)
 - **Book Reviews**: Users can read and write book reviews (✅ Completed)
 - **Responsive Design**: Mobile-friendly interface (✅ Completed)
 - **Pagination**: Efficient data loading with pagination (✅ Completed)
 - **Star Rating System**: Visual rating system for books (✅ Completed)
+- **Payment Integration**: Stripe payment processing for fees (✅ Completed)
+- **Admin Dashboard**: Administrative interface for add books, managing quantity of books and address comments from customers (✅ Completed)
 - [ ] **User Profiles**: Enhanced user management and profiles
 - [ ] **Shopping Cart**: Add cart functionality for book borrowing/purchasing
-- [ ] **Payment Integration**: Implement payment processing
-- [ ] **Admin Dashboard**: Administrative interface for managing books and users
 
 ### Long-term Goals
 - [ ] **Kubernetes Deployment**: Deploy the application using Kubernetes
